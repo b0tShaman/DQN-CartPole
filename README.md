@@ -89,4 +89,44 @@ The CartPole animation uses Java's **Swing** and **JPanel** to render the enviro
 
 ---
 
+## Key Variables
+
+Here are the main configurable variables in the code (DQN.java) that control the behavior of the simulation and the training process:
+
+- `train` (boolean):  
+  Set this to `true` to enable training. Once the training is complete, set it to `false` to stop training and begin using the trained model.
+
+- `Length_Of_Stick` (double):  
+  The length of the pole in meters. Default value is `0.326`.
+
+- `Mass_Of_Cart` (double):  
+  The mass of the cart in kilograms. Default value is `0.711`.
+
+- `Mass_Of_Stick` (double):  
+  The mass of the pole in kilograms. Default value is `0.209`.
+
+- `g` (double):  
+  The acceleration due to gravity (m/s²). Default value is `9.8`.
+
+- `initial_angle_of_stick` (double):  
+  The initial angle the pole makes with the cart in radians. A value of `0` means the pole is upright (balanced)
+
+- `fps` (int):  
+  Frames per second for the pendulum animation. Default value is `10`.
+
+- `M` (int):  
+  The number of times the agent interacts with the environment to create the `trainingSet.csv` file. Default value is `100`.
+
+- `maxEpisodeRewardRequired` (int):  
+  The reward threshold that, when achieved, will stop the training and save the neural network weights. Default value is `0`.
+
+- `EPISODES` (int):  
+  The number of data points in `trainingSet.csv` is calculated as `EPISODES / 0.02`. Default value is `30`.
+
+- `discount` (double):  
+  The discount factor for future rewards. Default value is `0.99`.
+
+- `Filepath` (string):  
+  The path to store Training Data and Neural Network weights.
+
 
