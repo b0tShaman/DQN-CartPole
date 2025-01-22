@@ -16,13 +16,13 @@ public class DQN {
     static double Mass_Of_Cart = 0.711; // mass of the cart
     static double Mass_Of_Stick = 0.209; // mass of the stick
     static double g = 9.8; // acceleration due to gravity
-    static double initial_angle_of_stick = -30 * (Math.PI/180); // 0 - upright(balanced), 30 = 30 degrees to right, 90 = horizontal
-    static int fps = 10; // frames per second for cart pole animation
-    public static String Filepath = "src/DQN/"; // path to store weights of Neural Networks
+    static double initial_angle_of_stick = 7 * (Math.PI/180); // 0 - upright(balanced), 30 = 30 degrees to right, 90 = horizontal
+    static int fps = 30; // frames per second for cart pole animation
+    public static String Filepath = "./src/DQN/"; // path to store weights of Neural Networks
 
-    static int M = 100;
+    static int M = 200;
     int maxEpisodeRewardRequired = 0;
-    static int EPISODES = 1;
+    static int EPISODES = 30;
     static int EPOCH = 1;
     double discount = 0.99;
     int actionSpace = 2;
@@ -103,43 +103,42 @@ public class DQN {
             }
             double episodeReward = 0;
             // createTrainingData
-            for (int episode = 0; episode < EPISODES; episode++) {
-                Environment_CartPole environment = new Environment_CartPole(0.17);
-                Environment_CartPole.State curr_state = environment.getState();
-                Environment_CartPole.State new_state;
+            Environment_CartPole environment = new Environment_CartPole(0.17);
+            Environment_CartPole.State curr_state = environment.getState();
+            Environment_CartPole.State new_state;
 
-                StateSpaceQuantization stateSpaceQuantization;
-                boolean verify = true;
+            StateSpaceQuantization stateSpaceQuantization;
+            boolean verify = true;
 
-                for (double i = 0; i < 30; i = i + 0.02) {
-                    stateSpaceQuantization = StateSpaceQuantization.getBox1(curr_state);
-                    List<Double> curr_state_NN_Input = currStateToInput(curr_state);
-                    feedForward_Q_Network(curr_state_NN_Input, 0);
+            for (double i = 0; i < EPISODES; i = i + 0.02) {
+                stateSpaceQuantization = StateSpaceQuantization.getBox1(curr_state);
+                List<Double> curr_state_NN_Input = currStateToInput(curr_state);
+                feedForward_Q_Network(curr_state_NN_Input, 0);
 
-                    double[] q_Outputs = new double[actionSpace];
-                    for (int j1 = 0; j1 < actionSpace; j1++) {
-                        q_Outputs[j1] = q_Output_Layer.get(j1).getOutput();
-                    }
-                    double Q_at = sampleAction(q_Outputs);
+                double[] q_Outputs = new double[actionSpace];
+                for (int j1 = 0; j1 < actionSpace; j1++) {
+                    q_Outputs[j1] = q_Output_Layer.get(j1).getOutput();
+                }
+                double Q_at = sampleAction(q_Outputs);
 
-                    new_state = environment.getNewStateAndReward(Q_at);
-                    stateSpaceQuantization = StateSpaceQuantization.getBox1(new_state);
-                    verify = StateSpaceQuantization.verify(stateSpaceQuantization);
+                new_state = environment.getNewStateAndReward(Q_at);
+                stateSpaceQuantization = StateSpaceQuantization.getBox1(new_state);
+                verify = StateSpaceQuantization.verify(stateSpaceQuantization);
 
-                    double reward = new_state.reward;
-                    episodeReward = episodeReward + reward;
-                    List<Double> new_state_NN_Input = currStateToInput(new_state);
+                double reward = new_state.reward;
+                episodeReward = episodeReward + reward;
+                List<Double> new_state_NN_Input = currStateToInput(new_state);
 
-                    StoreTrainingData(curr_state_NN_Input, Q_at, reward, new_state_NN_Input);
+                StoreTrainingData(curr_state_NN_Input, Q_at, reward, new_state_NN_Input);
 
-                    curr_state = new_state;
-                    clearCache();
-                    if (!verify) {
-                        System.out.println("EPISODE END !!!!!, time = " + (new_state.time) + ", x = " + (new_state.x) + ", theta_degree = " + (new_state.theta_degree));
-                        break;
-                    }
+                curr_state = new_state;
+                clearCache();
+                if (!verify) {
+                    System.out.println("EPISODE END !!!!!, time = " + (new_state.time) + ", x = " + (new_state.x) + ", theta_degree = " + (new_state.theta_degree));
+                    break;
                 }
             }
+
             //System.out.println("episodeReward " + episodeReward);
             avgRewardList.add(episodeReward);
             List<List<String>> trainingSet = new ArrayList<>();
