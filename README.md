@@ -18,8 +18,7 @@ This repository contains an implementation of a **Deep Q-Network (DQN)** algorit
 Before running the project, ensure you have the following installed:
 
 1. **Java Development Kit (JDK)** (Version 8 or higher)
-2. **Maven** (for managing dependencies, optional but recommended)
-3. A compatible **IDE** (e.g., IntelliJ IDEA, Eclipse, or VS Code with Java extensions).
+2. A compatible **IDE** (e.g., IntelliJ IDEA, Eclipse, or VS Code with Java extensions).
 
 ---
 
