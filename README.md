@@ -2,6 +2,8 @@
 
 This repository contains an implementation of a **Deep Q-Network (DQN)** algorithm for solving the CartPole problem. Additionally, it includes a visualization of the CartPole environment created using **JPanel** for animation.
 
+![Demo](assets/demo.gif)
+
 ---
 
 ## Features
@@ -42,9 +44,9 @@ cd DQN-CartPole
    ```bash
    javac -d bin src/DQN/DQN.java
    ```
-3. Run the main class:
+3. Run the main class (Pass true as arg to enable training):
    ```bash
-   java -cp bin src/DQN/DQN
+   java -cp bin src/DQN/DQN true
    ```
 
 ---
