@@ -11,7 +11,7 @@ import java.util.*;
 import static src.Common.Neuron.BATCH;
 
 public class DQN {
-    boolean train = false;
+    static boolean train = false;
     static double Length_Of_Stick = 0.326;// length of the stick on cart pole
     static double Mass_Of_Cart = 0.711; // mass of the cart
     static double Mass_Of_Stick = 0.209; // mass of the stick
@@ -39,6 +39,13 @@ public class DQN {
     List<NeuronBase> target_Output_Layer = new ArrayList<>();
 
     public static void main(String[] args) throws Exception{
+        if (args.length > 0) {
+            // Convert the argument to boolean
+            boolean flag = Boolean.parseBoolean(args[0]);
+            if (flag) {
+                train = true;
+            }
+        }
         DQN dqn = new DQN();
         dqn.DeepQNetwork();
     }

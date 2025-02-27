@@ -40,11 +40,11 @@ cd DQN-CartPole
 1. Navigate to the project root.
 2. Compile the Java files:
    ```bash
-   javac -d bin src/**/*.java
+   javac -d bin src/DQN/DQN.java
    ```
 3. Run the main class:
    ```bash
-   java -cp bin DQN.DQN
+   java -cp bin src/DQN/DQN
    ```
 
 ---
